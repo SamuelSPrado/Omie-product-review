@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Omie Product Review</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>Análise de Produtos Integrados</h1>
+
+<form method="post">
+    <label>Selecione o local:</label>
+    <select name="local" required>
+        <option value="">-- Selecione --</option>
+        {% for l in locais %}
+            <option value="{{ l }}" {% if l == local_selecionado %}selected{% endif %}>
+                {{ l }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Buscar</button>
+</form>
+
+{% if produtos %}
+<table>
+    <thead>
+        <tr>
+            <th>Código Produto</th>
+            <th>Descrição</th>
+            <th>Código</th>
+            <th>Código Integração</th>
+            <th>Ação</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in produtos %}
+        <tr>
+            <td>{{ p.codigo_produto }}</td>
+            <td>{{ p.descricao }}</td>
+            <td>{{ p.codigo }}</td>
+            <td>
+                <form method="post" action="/associar">
+                    <input type="hidden" name="local" value="{{ local_selecionado }}">
+                    <input type="hidden" name="codigo_produto" value="{{ p.codigo_produto }}">
+                    <input type="text"
+                           name="codigo_integracao"
+                           value="{{ p.codigo_produto_integracao }}">
+                    <button type="submit">Associar</button>
+                </form>
+            </td>
+            <td>{{ p.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+</body>
+</html>
