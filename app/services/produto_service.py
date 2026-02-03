@@ -31,3 +31,15 @@ def listar_produtos(app_key, app_secret):
         pagina += 1
 
     return produtos
+
+def avaliar_status(produto):
+    cod = produto.get("codigo")
+    cod_int = produto.get("codigo_produto_integracao", "")
+
+    if not cod_int:
+        return "Sem código integração"
+
+    if cod == cod_int:
+        return "Códigos corretos"
+
+    return "Código divergênte"
