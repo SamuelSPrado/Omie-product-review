@@ -43,3 +43,25 @@ def avaliar_status(produto):
         return "Códigos corretos"
 
     return "Código divergênte"
+
+def associar_codigo(app_key, app_secret, codigo_produto, codigo_integracao):
+    payload = {
+        "call": "AssociarCodIntProduto",
+        "app_key": app_key,
+        "app_secret": app_secret,
+        "param": [{
+            "codigo_produto": codigo_produto,
+            "codigo_produto_integracao": codigo_integracao
+        }]
+    }
+
+    response = post_omie(payload)
+
+    if response.get("codigo_status") == "0":
+        logger.info(
+            f"codigo_produto={codigo_produto}",
+            f"codigo_integracao={codigo_integracao}"
+        )
+
+    time.sleep(5)
+    return response
