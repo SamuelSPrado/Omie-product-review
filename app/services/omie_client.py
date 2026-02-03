@@ -8,5 +8,11 @@ def post_omie(payload):
         json=payload,
         timeout=30
     )
-    response.raise_for_status()
-    return response.json()
+
+    try:
+        return response.json()
+    except ValueError:
+        return {
+            "codigo_status": "HTTP_ERROR",
+            "descricao_status": response.text
+        }

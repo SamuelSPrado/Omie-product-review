@@ -39,7 +39,7 @@ def index():
         produtos=produtos
     )
 
-@main.route("/associar", method=["POST"])
+@main.route("/associar", methods=["POST"])
 def associar():
     local = request.form["local"]
     codigo_produto = request.form["codigo_produto"]
