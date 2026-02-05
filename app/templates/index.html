@@ -44,22 +44,17 @@
 
             <td>
                 <input type="text"
-                       class="codigo-integracao"
-                       data-codigo-produto="{{ p.codigo_produto }}"
-                       value="{{ p.codigo_produto_integracao }}">
-            </td>
+                   class="codigo-integracao"
+                   value="{{ p.codigo_produto_integracao }}">
 
-            <td>
-                <button type="button"
-                        data-local="{{ local_selecionado }}"
-                        onclick="associarCodigo(this)">
-                    Associar
-                </button>
-            </td>
+            <button type="button"
+                    class="btn-associar"
+                    data-local="{{ local_selecionado }}"
+                    data-codigo-produto="{{ p.codigo_produto }}">
+                Associar
+            </button>
 
-            <td class="status">
-                {{ p.status }}
-            </td>
+            <td class="status">{{ p.status }}</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -67,40 +62,41 @@
 {% endif %}
 
 <script>
-async function associarCodigo(botao) {
-    const linha = botao.closest("tr");
-    const input = linha.querySelector(".codigo-integracao");
-    const statusCell = linha.querySelector(".status");
+document.querySelectorAll(".btn-associar").forEach(btn => {
+    btn.addEventListener("click", async function () {
+        const row = btn.closest("tr");
+        const statusCell = row.querySelector(".status");
+        const input = row.querySelector(".codigo-integracao");
 
-    const payload = {
-        local: botao.dataset.local,
-        codigo_produto: input.dataset.codigoProduto,
-        codigo_integracao: input.value
-    };
+        const payload = {
+            local: btn.dataset.local,
+            codigo_produto: btn.dataset.codigoProduto,
+            codigo_integracao: input.value
+        };
 
-    statusCell.textContent = "Processando...";
+        try {
+            const response = await fetch("/associar-json", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
 
-    try {
-        const response = await fetch("/associar-json", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
+            const data = await response.json();
 
-        const data = await response.json();
+            alert(JSON.stringify(data, null, 2));
 
-        if (!response.ok) {
-            statusCell.textContent = data.erro || "Erro";
-            return;
+            if (data.codigo_status === "0") {
+                statusCell.innerText = "Sucesso";
+            } else {
+                statusCell.innerText = "Erro";
+            }
+
+        } catch (err) {
+            alert("Erro de comunicação com o servidor");
+            statusCell.innerText = "Erro";
         }
-
-        statusCell.textContent = data.status;
-    } catch (e) {
-        statusCell.textContent = "Erro de comunicação";
-    }
-}
+    });
+});
 </script>
 
 </body>
