@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import logging
+from flask import jsonify
 from .config.mapeamento import LOCAIS
 from .services.produto_service import (
     listar_produtos,
@@ -55,3 +56,38 @@ def associar():
     )
 
     return redirect(url_for("main.index", local=local))
+
+@main.route("/associar-json", methods=["POST"])
+def associar_json():
+    try:
+        data = request.get_json()
+
+        local = data["local"]
+        codigo_produto = int(data["codigo_produto"])
+        codigo_integracao = data["codigo_integracao"]
+
+        cred = LOCAIS[local]
+
+        response = associar_codigo(
+            cred["app_key"],
+            cred["app_secret"],
+            codigo_produto,
+            codigo_integracao
+        )
+
+        if response.get("codigo_status") == 0:
+            return jsonify({
+                "sucesso": True,
+                "mensagem": response.get("descricao_status"),
+                "codigo_integracao": codigo_integracao
+            })
+        return jsonify({
+            "sucesso": False,
+            "mensagem": response.get("descricao_status", "Erro desconhecido")
+        })
+
+    except Exception as e:
+        return jsonify({
+            "sucesso": False,
+            "mensagem": f"Erro interno: {str(e)}"
+        }), 500
