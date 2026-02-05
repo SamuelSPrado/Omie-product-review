@@ -62,32 +62,38 @@ def associar_json():
     try:
         data = request.get_json()
 
-        local = data["local"]
-        codigo_produto = int(data["codigo_produto"])
-        codigo_integracao = data["codigo_integracao"]
+        local = data.get("local")
+        codigo_produto = data.get("codigo_produto")
+        codigo_integracao = data.get("codigo_integracao")
 
-        cred = LOCAIS[local]
+        if not all([local, codigo_produto, codigo_integracao]):
+            return jsonify({
+                "success": False,
+                "message": "Dados incompletos"
+            }), 400
 
-        response = associar_codigo(
+        cred = LOCAIS.get(local)
+        if not cred:
+            return jsonify({
+                "success": False,
+                "message": "Local inválido"
+            }), 400
+
+        resposta = associar_codigo(
             cred["app_key"],
             cred["app_secret"],
-            codigo_produto,
+            int(codigo_produto),
             codigo_integracao
         )
 
-        if response.get("codigo_status") == 0:
-            return jsonify({
-                "sucesso": True,
-                "mensagem": response.get("descricao_status"),
-                "codigo_integracao": codigo_integracao
-            })
         return jsonify({
-            "sucesso": False,
-            "mensagem": response.get("descricao_status", "Erro desconhecido")
+            "success": True,
+            "status": "Código associado com sucesso",
+            "codigo_integracao": codigo_integracao
         })
 
     except Exception as e:
         return jsonify({
-            "sucesso": False,
-            "mensagem": f"Erro interno: {str(e)}"
+            "success": False,
+            "message": str(e)
         }), 500
