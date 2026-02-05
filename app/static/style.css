@@ -54,19 +54,33 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* Tabela */
+/* ===================== */
+/* TABELA COM HEADER FIXO */
+/* ===================== */
+
 table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
     border-radius: 6px;
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: 70vh;           /* controla altura visível */
+    display: block;             /* necessário para sticky funcionar */
 }
 
 thead {
+    position: sticky;
+    top: 0;
     background-color: #eef2f7;
+    z-index: 2;
 }
 
+thead th {
+    position: sticky;
+    top: 0;
+}
+
+/* Células */
 th, td {
     padding: 10px 12px;
     text-align: left;
@@ -119,14 +133,14 @@ tbody tr:hover {
     color: #dc3545; /* vermelho */
 }
 
-/* Responsividade */
-@media (max-width: 900px) {
-    table {
-        font-size: 13px;
-    }
+/* ===================== */
+/* RESPONSIVIDADE */
+/* ===================== */
 
+@media (max-width: 900px) {
     th, td {
         padding: 8px;
+        font-size: 13px;
     }
 }
 
@@ -144,5 +158,6 @@ tbody tr:hover {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
+        max-height: none; /* mobile usa scroll horizontal */
     }
 }

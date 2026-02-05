@@ -24,6 +24,20 @@
 </form>
 
 {% if produtos %}
+
+<!-- Filtro por Status -->
+<div style="margin-bottom: 12px;">
+    <label for="filtro-status"><strong>Filtrar por status:</strong></label>
+    <select id="filtro-status">
+        <option value="">Todos</option>
+        <option value="Sem código integração">Sem código integração</option>
+        <option value="Código divergênte">Código divergênte</option>
+        <option value="Códigos corretos">Códigos corretos</option>
+        <option value="Sucesso">Sucesso</option>
+        <option value="Erro">Erro</option>
+    </select>
+</div>
+
 <table>
     <thead>
         <tr>
@@ -70,6 +84,7 @@
 {% endif %}
 
 <script>
+// Associação via fetch (sem reload)
 document.querySelectorAll(".btn-associar").forEach(btn => {
     btn.addEventListener("click", async function () {
         const row = btn.closest("tr");
@@ -108,6 +123,26 @@ document.querySelectorAll(".btn-associar").forEach(btn => {
         }
     });
 });
+
+// Filtro por status (client-side)
+const filtroStatus = document.getElementById("filtro-status");
+
+if (filtroStatus) {
+    filtroStatus.addEventListener("change", function () {
+        const statusSelecionado = this.value;
+
+        document.querySelectorAll("tbody tr").forEach(row => {
+            const statusCell = row.querySelector(".status");
+            const statusTexto = statusCell.innerText.trim();
+
+            if (!statusSelecionado || statusTexto === statusSelecionado) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+}
 </script>
 
 </body>
