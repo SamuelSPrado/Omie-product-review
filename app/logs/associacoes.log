@@ -31,3 +31,19 @@
 2026-02-03 14:32:43,032 -  * Restarting with stat
 2026-02-03 14:32:43,831 -  * Debugger is active!
 2026-02-03 14:32:43,837 -  * Debugger PIN: 340-817-751
+2026-02-03 14:38:31,664 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-03 14:38:31,664 - [33mPress CTRL+C to quit[0m
+2026-02-03 14:38:31,669 -  * Restarting with stat
+2026-02-03 14:38:32,352 -  * Debugger is active!
+2026-02-03 14:38:32,358 -  * Debugger PIN: 340-817-751
+2026-02-03 14:38:43,169 - 127.0.0.1 - - [03/Feb/2026 14:38:43] "[32mPOST /associar HTTP/1.1[0m" 302 -
+2026-02-03 14:38:43,219 - 127.0.0.1 - - [03/Feb/2026 14:38:43] "GET /?local=SO+SIMPATIA+-+PETROPOLIS HTTP/1.1" 200 -
+2026-02-03 14:38:43,408 - 127.0.0.1 - - [03/Feb/2026 14:38:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-02-03 14:38:55,541 - 127.0.0.1 - - [03/Feb/2026 14:38:55] "POST /?local=SO+SIMPATIA+-+PETROPOLIS HTTP/1.1" 200 -
+2026-02-03 14:38:55,629 - 127.0.0.1 - - [03/Feb/2026 14:38:55] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-02-03 14:41:16,504 - 127.0.0.1 - - [03/Feb/2026 14:41:16] "[32mPOST /associar HTTP/1.1[0m" 302 -
+2026-02-03 14:41:16,517 - 127.0.0.1 - - [03/Feb/2026 14:41:16] "GET /?local=SO+SIMPATIA+-+PETROPOLIS HTTP/1.1" 200 -
+2026-02-03 14:41:16,624 - 127.0.0.1 - - [03/Feb/2026 14:41:16] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-02-03 14:41:28,093 - 127.0.0.1 - - [03/Feb/2026 14:41:28] "POST /?local=SO+SIMPATIA+-+PETROPOLIS HTTP/1.1" 200 -
+2026-02-03 14:41:28,186 - 127.0.0.1 - - [03/Feb/2026 14:41:28] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
