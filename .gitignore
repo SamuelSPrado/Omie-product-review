@@ -1,9 +1,16 @@
+# Variáveis e segredos
 .env
+secret.py
 app/config/locais.json
+app/config/mapeamento.py
 
-__pycache__/
+# Ambiente
 .venv/
 .idea/
 
-secret.py
-app/config/mapeamento.py
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+app/logs/
