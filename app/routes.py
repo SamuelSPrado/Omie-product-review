@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+import os
 import logging
 from flask import jsonify
 from app.config.settings import LOCAIS
@@ -10,8 +11,11 @@ from .services.produto_service import (
 
 main = Blueprint("main", __name__)
 
+LOG_DIR = "app/logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+
 logging.basicConfig(
-    filename="app/logs/associacoes.log",
+    filename=os.path.join(LOG_DIR, "associacoes.log"),
     level=logging.INFO,
     format="%(asctime)s - %(message)s"
 )
