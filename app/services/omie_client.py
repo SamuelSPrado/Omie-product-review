@@ -1,6 +1,7 @@
 import requests
+from app.config.settings import OMIE_BASE_URL
 
-OMIE_BASE_URL_API_PRODUTOS = "https://app.omie.com.br/api/v1/geral/produtos/"
+OMIE_BASE_URL_API_PRODUTOS = OMIE_BASE_URL
 
 def post_omie(payload):
     response = requests.post(

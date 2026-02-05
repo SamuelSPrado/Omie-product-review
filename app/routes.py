@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import logging
 from flask import jsonify
-from .config.mapeamento import LOCAIS
+from app.config.settings import LOCAIS
 from .services.produto_service import (
     listar_produtos,
     avaliar_status,

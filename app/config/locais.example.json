@@ -1,0 +1,10 @@
+{
+  "EXEMPLO Local 1": {
+    "app_key": "SUA_APP_KEY",
+    "app_secret": "SEU_APP_SECRET"
+  },
+  "EXEMPLO Local 2": {
+    "app_key": "SUA_APP_KEY",
+    "app_secret": "SEU_APP_SECRET"
+  }
+}
