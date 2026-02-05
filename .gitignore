@@ -4,3 +4,6 @@ app/config/locais.json
 __pycache__/
 .venv/
 .idea/
+
+secret.py
+app/config/mapeamento.py
