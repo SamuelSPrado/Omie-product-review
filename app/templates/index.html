@@ -44,17 +44,25 @@
 
             <td>
                 <input type="text"
-                   class="codigo-integracao"
-                   value="{{ p.codigo_produto_integracao }}">
+                       class="codigo-integracao"
+                       value="{{ p.codigo_produto_integracao }}">
+            </td>
 
-            <button type="button"
-                    class="btn-associar"
-                    data-local="{{ local_selecionado }}"
-                    data-codigo-produto="{{ p.codigo_produto }}">
-                Associar
-            </button>
+            <td>
+                <button type="button"
+                        class="btn-associar"
+                        data-local="{{ local_selecionado }}"
+                        data-codigo-produto="{{ p.codigo_produto }}">
+                    Associar
+                </button>
+            </td>
 
-            <td class="status">{{ p.status }}</td>
+            <td class="status
+                {% if p.status == 'Códigos corretos' %}ok
+                {% elif p.status == 'Sem código integração' %}warn
+                {% else %}error{% endif %}">
+                {{ p.status }}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
@@ -87,13 +95,16 @@ document.querySelectorAll(".btn-associar").forEach(btn => {
 
             if (data.codigo_status === "0") {
                 statusCell.innerText = "Sucesso";
+                statusCell.className = "status ok";
             } else {
                 statusCell.innerText = "Erro";
+                statusCell.className = "status error";
             }
 
         } catch (err) {
             alert("Erro de comunicação com o servidor");
             statusCell.innerText = "Erro";
+            statusCell.className = "status error";
         }
     });
 });
