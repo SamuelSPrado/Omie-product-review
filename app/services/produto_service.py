@@ -15,7 +15,7 @@ def listar_produtos(app_key, app_secret):
             "app_secret": app_secret,
             "param": [{
                 "pagina": pagina,
-                "registros_por_pagina": 100,
+                "registros_por_pagina": 1000,
                 "apenas_importado_api": "N",
                 "filtrar_apenas_omiepdv": "N"
             }]
@@ -59,8 +59,9 @@ def associar_codigo(app_key, app_secret, codigo_produto, codigo_integracao):
 
     if response.get("codigo_status") == "0":
         logger.info(
-            f"codigo_produto={codigo_produto}",
-            f"codigo_integracao={codigo_integracao}"
+            "Associacao realizada | codigo_produto=%s | codigo_integracao=%s",
+            codigo_produto,
+            codigo_integracao
         )
 
     time.sleep(5)
