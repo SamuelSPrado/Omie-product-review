@@ -41,22 +41,67 @@
             <td>{{ p.codigo_produto }}</td>
             <td>{{ p.descricao }}</td>
             <td>{{ p.codigo }}</td>
+
             <td>
-                <form method="post" action="/associar">
-                    <input type="hidden" name="local" value="{{ local_selecionado }}">
-                    <input type="hidden" name="codigo_produto" value="{{ p.codigo_produto }}">
-                    <input type="text"
-                           name="codigo_integracao"
-                           value="{{ p.codigo_produto_integracao }}">
-                    <button type="submit">Associar</button>
-                </form>
+                <input type="text"
+                       class="codigo-integracao"
+                       data-codigo-produto="{{ p.codigo_produto }}"
+                       value="{{ p.codigo_produto_integracao }}">
             </td>
-            <td>{{ p.status }}</td>
+
+            <td>
+                <button type="button"
+                        data-local="{{ local_selecionado }}"
+                        onclick="associarCodigo(this)">
+                    Associar
+                </button>
+            </td>
+
+            <td class="status">
+                {{ p.status }}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 {% endif %}
+
+<script>
+async function associarCodigo(botao) {
+    const linha = botao.closest("tr");
+    const input = linha.querySelector(".codigo-integracao");
+    const statusCell = linha.querySelector(".status");
+
+    const payload = {
+        local: botao.dataset.local,
+        codigo_produto: input.dataset.codigoProduto,
+        codigo_integracao: input.value
+    };
+
+    statusCell.textContent = "Processando...";
+
+    try {
+        const response = await fetch("/associar-json", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            statusCell.textContent = data.erro || "Erro";
+            return;
+        }
+
+        statusCell.textContent = data.status;
+    } catch (e) {
+        statusCell.textContent = "Erro de comunicação";
+    }
+}
+</script>
 
 </body>
 </html>
